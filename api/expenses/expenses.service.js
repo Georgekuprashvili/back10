@@ -1,22 +1,21 @@
 const { readFile, writeFile } = require("../../utils");
 
 const getAllExpenses = async (req, res) => {
-  const page = parseInt(req.query.page) || 1;
-  const take = parseInt(req.query.take) || 30;
-
+  let page = Number(query.page) || 1;
+  let take = Number(query.take) || 30;
+  take = Math.min(30, take);
+  const start = (page - 1) * take;
+  const end = page * take;
   const expenses = await readFile("expenses.json", true);
   if (!req.query.page && !req.query.take) {
     return res.json(expenses);
   }
 
-  const start = (page - 1) * take;
-  const paginated = expenses.slice(start, start + take);
-
   res.json({
     total: expenses.length,
     page,
     take,
-    data: paginated,
+    data: expenses.slice(start, end),
   });
 };
 
