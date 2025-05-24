@@ -1,12 +1,11 @@
 const { Router } = require("express");
-
 const {
   getAllExpenses,
   getExpenseById,
   createExpense,
   updateExpense,
   deleteExpense,
-} = require(".././expenses/expenses.service");
+} = require("./expenses.service");
 const { check, validation } = require("../../middlewares/expenses.middleware");
 const { upload } = require("../../config/cloudinary.config");
 

@@ -52,7 +52,7 @@ const createExpense = async (req, res) => {
   expenses.push(newexpense);
   await writeFile("expenses.json", JSON.stringify(expenses));
 
-  res.status(200).json({ message: "expense created", data: newexpense });
+  res.redirect("/");
 };
 
 const updateExpense = async (req, res) => {
@@ -64,13 +64,23 @@ const updateExpense = async (req, res) => {
     res.status(404).json({ error: "expense not found" });
   }
 
-  expenses[index] = {
-    ...expenses[index],
-    category: category || expenses[index].category,
-    price: price || expenses[index].price,
-  };
+  const existing = expenses[index];
+
+  if (req.file) {
+    if (existing.imageId) {
+      await deleteFromCloudinary(existing.imageId);
+    }
+
+    existing.image = req.file.path;
+    existing.imageId = req.file.filename;
+  }
+
+  existing.category = category || existing.category;
+  existing.price = price || existing.price;
+
+  expenses[index] = existing;
   await writeFile("expenses.json", JSON.stringify(expenses));
-  res.json({ message: "expense updated", data: expenses[index] });
+  res.redirect("/");
 };
 
 const deleteExpense = async (req, res) => {

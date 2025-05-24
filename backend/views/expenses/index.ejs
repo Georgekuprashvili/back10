@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>All Expenses</h1>
+    <a href="/expenses/create">Create New Expense</a>
+    <ul>
+      <% expenses.forEach(expense => { %>
+      <li>
+        <% if (expense.image) { %>
+        <img src="<%= expense.image %>" alt="Expense image" />
+        <% } else { %>
+        <div
+          style="
+            width: 100px;
+            height: 100px;
+            background: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          No image
+        </div>
+        <% } %>
+        <div>
+          <p><strong>Category:</strong> <%= expense.category %></p>
+          <p><strong>Price:</strong> $<%= expense.price %></p>
+          <a href="/expenses/<%= expense.id %>">Details</a> |
+          <a href="/expenses/update/<%= expense.id %>">Edit</a>
+        </div>
+      </li>
+      <% }) %>
+    </ul>
+  </body>
+</html>

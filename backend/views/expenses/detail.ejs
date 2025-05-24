@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Expense Detail</h1>
+
+    <% if (expense.image) { %>
+    <img src="<%= expense.image %>" alt="Expense Image" />
+    <% } else { %>
+    <p>No image available.</p>
+    <% } %>
+
+    <p><strong>Category:</strong> <%= expense.category %></p>
+    <p><strong>Price:</strong> $<%= expense.price %></p>
+    <p>
+      <strong>Created At:</strong> <%= new
+      Date(expense.createdat).toLocaleString() %>
+    </p>
+    <a href="/">Back to All Expenses</a>
+  </body>
+</html>
